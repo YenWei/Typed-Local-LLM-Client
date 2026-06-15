@@ -1,0 +1,24 @@
+from pydantic import BaseModel
+from pydantic import field_validator
+from typing import Literal
+
+class LLMRequest(BaseModel):
+    model: str = "qwen2.5:7b-instruct-q4_K_M"
+    prompt: str
+    temperature: float = 0.1
+    max_tokens: int = 1000
+
+    @field_validator('prompt')
+    @classmethod
+    def validate_prompt(cls, val: str) -> str:
+        if len(val.strip()) == 0:
+            raise ValueError('Prompt cannot be empty or whitespace')
+        return val
+
+
+class TaskSummary(BaseModel):
+    title: str
+    complexity: Literal['low', 'medium', 'high']
+    estimated_minutes: int
+    key_steps: list[str]
+
