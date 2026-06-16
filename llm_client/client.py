@@ -26,3 +26,4 @@ class LLMClient:
         except ResponseError as e:
             print(f"Error generating response from LLM: {e}")
             raise LLMValidationError(f"Error generating response from LLM: {e}") from e
+        

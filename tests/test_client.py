@@ -2,7 +2,8 @@ import pytest
 from unittest.mock import MagicMock, patch
 from llm_client.client import LLMClient, LLMRequest
 
-MOCK_OLLAMA_HOST_URL = "http://localhost:1234"
+MOCK_OLLAMA_HOST_URL = str("http://localhost:1234")
+REAL_OLLAMA_HOST_URL = str("http://10.170.10.109:11434")
 
 def test_client_ping():
     with patch('llm_client.client.ollama.Client') as MockClient:
@@ -31,3 +32,14 @@ def test_client_generate():
         result = client.generate(LLMRequest(prompt="dummy"))
 
         assert result == mock_response.response
+
+@pytest.mark.integration
+def test_client_integration():
+    test_client = LLMClient(REAL_OLLAMA_HOST_URL)
+    assert test_client != None
+    assert test_client.ping() == True
+
+    simple_prompt = "Say HELLO in reply. No other words."
+    reply = test_client.generate(LLMRequest(prompt=simple_prompt))
+
+    assert reply != None and len(reply) > 0
