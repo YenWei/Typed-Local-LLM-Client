@@ -1,6 +1,6 @@
 import ollama
-from ollama import ResponseError
-from llm_client.retry import extract_json, retry_generate
+from ollama import ResponseError, GenerateResponse
+from llm_client.retry import retry_generate
 from llm_client.schemas import LLMRequest, LLMResponse
 from llm_client.exceptions import LLMErrorBase, LLMValidationError
 
@@ -38,4 +38,11 @@ class LLMClient:
         except ResponseError as e:
             print(f"Error generating response from LLM: {e}")
             raise LLMValidationError(f"Error generating response from LLM: {e}") from e
+        
+    def _generateRAW(self, request: LLMRequest) -> GenerateResponse:
+        try:
+            response = self.client.generate(model=request.model, prompt=request.prompt)
+            return response
+        except ResponseError as e:
+            raise ResponseError(f"Error generating response from LLM: {e}") from e
         
