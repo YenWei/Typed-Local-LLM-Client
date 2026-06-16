@@ -2,9 +2,6 @@ import time
 from llm_client.client import LLMClient
 from llm_client.schemas import LLMRequest
 
-def run_benchmark(client, prompt: str):
-    pass
-
 if __name__ == "__main__":
     HOST_URL = "http://10.170.10.109:11434"
 

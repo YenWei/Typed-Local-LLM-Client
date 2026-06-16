@@ -17,8 +17,7 @@ class LLMRequest(BaseModel):
     
 class LLMResponse(BaseModel):
     raw: str
-    #output_str: str
-    data: dict | None = None
+    data: BaseModel | None = None
 
 
 class TaskSummary(BaseModel):

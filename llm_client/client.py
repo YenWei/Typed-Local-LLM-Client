@@ -1,5 +1,6 @@
 import ollama
 from ollama import ResponseError, GenerateResponse
+from pydantic import BaseModel
 from llm_client.retry import retry_generate
 from llm_client.schemas import LLMRequest, LLMResponse
 from llm_client.exceptions import LLMErrorBase, LLMValidationError
@@ -22,9 +23,9 @@ class LLMClient:
             print(f"Error pinging LLM server: {e}")
             return False
         
-    def generate_reply(self, request: LLMRequest) -> LLMResponse:
+    def generate_reply(self, request: LLMRequest, output_Type: type[BaseModel]) -> LLMResponse:
         try:
-            raw, response = retry_generate(self, request, self.max_retries_count)
+            raw, response = retry_generate(self, request, output_Type, self.max_retries_count)
             return LLMResponse(raw=raw, data=response)
         
         except (ResponseError, LLMErrorBase) as e:
