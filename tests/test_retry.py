@@ -1,5 +1,5 @@
 import pytest
-from llm_client.exceptions import LLMValidationError
+from llm_client.exceptions import LLMValidationError, LLMTimeoutError
 from llm_client.retry import extract_json, retry_generate
 
 def test_extract_json_valid():
@@ -25,7 +25,7 @@ def test_retry_generate_success():
     request = {}
     result = retry_generate(client, request, 3)
 
-    assert result == {"key": "value", "number": 123}
+    assert result[1] == {"key": "value", "number": 123}
 
 def test_retry_generate_max_retries():
     class MockClient:
@@ -34,5 +34,5 @@ def test_retry_generate_max_retries():
         
     client = MockClient()
     request = {}
-    with pytest.raises(LLMValidationError) as exec_error:
+    with pytest.raises(LLMTimeoutError) as exec_error:
         retry_generate(client, request, 3)

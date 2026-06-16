@@ -14,6 +14,11 @@ class LLMRequest(BaseModel):
         if len(val.strip()) == 0:
             raise ValueError('Prompt cannot be empty or whitespace')
         return val
+    
+class LLMResponse(BaseModel):
+    raw: str
+    #output_str: str
+    data: dict | None = None
 
 
 class TaskSummary(BaseModel):

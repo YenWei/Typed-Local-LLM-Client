@@ -29,7 +29,7 @@ def test_client_generate():
         mock_instance.generate.return_value = mock_response
 
         client = LLMClient(MOCK_OLLAMA_HOST_URL)
-        result = client.generate(LLMRequest(prompt="dummy"))
+        result = client._generate(LLMRequest(prompt="dummy"))
 
         assert result == mock_response.response
 
@@ -40,6 +40,6 @@ def test_client_integration():
     assert test_client.ping() == True
 
     simple_prompt = "Say HELLO in reply. No other words."
-    reply = test_client.generate(LLMRequest(prompt=simple_prompt))
+    reply = test_client._generate(LLMRequest(prompt=simple_prompt))
 
     assert reply != None and len(reply) > 0

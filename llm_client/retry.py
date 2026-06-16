@@ -1,5 +1,5 @@
 from pydantic import BaseModel
-from llm_client.exceptions import LLMErrorBase, LLMValidationError
+from llm_client.exceptions import LLMErrorBase, LLMValidationError, LLMTimeoutError
 import json
 import re
 
@@ -15,16 +15,16 @@ def extract_json(output: str) -> dict:
     except json.JSONDecodeError as e:
         raise LLMValidationError(f"Invalid JSON format: {e.msg}") from e
 
-def retry_generate(client, request: BaseModel, retries: int = 3) -> dict:
+def retry_generate(client, request: BaseModel, retries: int = 3) -> tuple[str, dict]:
     """Retry logic for generating LLM output with error handling."""
     retries_count = 0
     while retries_count < retries:
         try:
             output = client.generate(request)
-            return extract_json(output)
+            return (output, extract_json(output))
         except LLMErrorBase as e:
             retries_count += 1
             if retries_count >= retries:
-                raise e
+                raise LLMTimeoutError(str(e)) from e
 
 

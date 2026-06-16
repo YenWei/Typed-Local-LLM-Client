@@ -1,15 +1,18 @@
 import ollama
 from ollama import ResponseError
-from llm_client.schemas import LLMRequest
-from llm_client.exceptions import LLMUnavailableError, LLMValidationError
+from llm_client.retry import extract_json, retry_generate
+from llm_client.schemas import LLMRequest, LLMResponse
+from llm_client.exceptions import LLMErrorBase, LLMValidationError
 
 class LLMClient:
     host : str
     client : ollama.Client
+    max_retries_count: int
 
     def __init__(self, host: str):
         self.host = host
         self.client = ollama.Client(host)
+        self.max_retries_count = 3
 
     def ping(self) -> bool:
         try:
@@ -19,7 +22,16 @@ class LLMClient:
             print(f"Error pinging LLM server: {e}")
             return False
         
-    def generate(self, request: LLMRequest) -> str:        
+    def generate_reply(self, request: LLMRequest) -> LLMResponse:
+        try:
+            raw, response = retry_generate(self, request, self.max_retries_count)
+            return LLMResponse(raw=raw, data=response)
+        
+        except (ResponseError, LLMErrorBase) as e:
+            print(f"Error generating response from LLM: {e}")
+            return LLMResponse(raw="", data=None)
+        
+    def _generate(self, request: LLMRequest) -> str:
         try:
             response = self.client.generate(model=request.model, prompt=request.prompt)
             return response.response
