@@ -1,120 +1,88 @@
-Benchmarking for current Model: qwen2.5:7b-instruct-q4_K_M
+Benchmark Summary
 
-Current Prompt: Say HELLO in reply. No other words/format.
-Current Response: HELLO
-Current Prompt Latency: 12.268613699823618
-Current Generated Tokens: 3
-Current Tokens / sec: 24.46064282569346
+Purpose
+Evaluate candidate local LLMs for a CPU-only spare PC intended to support tools and scripts.
 
+Environment
+- Local Ollama host over LAN
+- CPU-only inference
+- No GPU acceleration
 
-Current Prompt: Where is the capital of Singapore?
-Current Response: The capital city of Singapore is Singapore itself. Unlike some countries that have designated separate cities for their governments, Singapore functions as its own capital. The government buildings, including Parliament House, and key governmental agencies are located throughout the city-state.
-Current Prompt Latency: 3.066727299708873
-Current Generated Tokens: 48
-Current Tokens / sec: 16.76498632605803
+Metrics Collected
+- Instruction following
+- Stable factual recall
+- Modern factual recall
+- Structured output format compliance
+- Average generated tokens
+- Average latency
+- Minimum latency
+- Maximum latency
 
+Models Tested
+- qwen2.5:7b-instruct-q4_K_M
+- mistral:7b-instruct-q4_K_M
+- llama3.1:8b-instruct-q4_K_M
+- gemma4:e4b
+- qwen3:8b
 
-Current Prompt: what is the host country of World Cup 2026?
-Current Response: The host countries for the 2026 FIFA World Cup are the United States, Canada, and Mexico. This will be the first time that the tournament will be co-hosted by three nations.
-Current Prompt Latency: 2.7393904998898506
-Current Generated Tokens: 42
-Current Tokens / sec: 16.830463138280287
+Results
 
+Model: qwen2.5:7b-instruct-q4_K_M
+- Instruction Following: PASS
+- Stable Fact Correct: PASS
+- Modern Fact Correct: PASS
+- Structured Output Format: 2/2
+- Average Generated Tokens: 19.00
+- Average Latency: 5.25s
+- Min Latency: 0.64s
+- Max Latency: 12.11s
+- Notes: Best overall balance of correctness, structured-output compliance, and practical CPU latency.
 
-Min Latentcy for Model: 2.7393904998898506
-Max Latentcy for Model: 12.268613699823618
-Avg Latentcy for Model: 6.024910499807447
+Model: mistral:7b-instruct-q4_K_M
+- Instruction Following: PASS
+- Stable Fact Correct: PASS
+- Modern Fact Correct: PASS
+- Structured Output Format: 2/2
+- Average Generated Tokens: 17.67
+- Average Latency: 1.12s
+- Min Latency: 0.30s
+- Max Latency: 2.54s
+- Notes: Fastest overall. Structured format compliance was good, but answer quality was weaker on some structured prompts.
 
+Model: llama3.1:8b-instruct-q4_K_M
+- Instruction Following: PASS
+- Stable Fact Correct: PASS
+- Modern Fact Correct: PASS
+- Structured Output Format: 2/2
+- Average Generated Tokens: 10.33
+- Average Latency: 4.97s
+- Min Latency: 0.70s
+- Max Latency: 12.72s
+- Notes: Compact normal-prompt outputs and acceptable correctness, but slower first-response behavior than the top practical candidate.
 
-Benchmarking for current Model: mistral:7b-instruct-q4_K_M
+Model: gemma4:e4b
+- Instruction Following: PASS
+- Stable Fact Correct: PASS
+- Modern Fact Correct: PASS
+- Structured Output Format: 2/2
+- Average Generated Tokens: 82.00
+- Average Latency: 12.61s
+- Min Latency: 0.76s
+- Max Latency: 25.92s
+- Notes: Strong format compliance and good answers, but latency and verbosity were high for this CPU-only setup.
 
-Current Prompt: Say HELLO in reply. No other words/format.
-Current Response: HELLO
-Current Prompt Latency: 0.2947811000049114
-Current Generated Tokens: 4
-Current Tokens / sec: 22.217778666488925
+Model: qwen3:8b
+- Instruction Following: PASS
+- Stable Fact Correct: PASS
+- Modern Fact Correct: PASS
+- Structured Output Format: 2/2
+- Average Generated Tokens: 297.33
+- Average Latency: 20.78s
+- Min Latency: 5.96s
+- Max Latency: 28.78s
+- Notes: Correct and compliant, but excessively verbose and too slow for the intended local tool-serving use case.
 
-
-Current Prompt: Where is the capital of Singapore?
-Current Response: The capital city of Singapore is Singapore, not a specific location within the country. It's an island city-state located in Southeast Asia.
-Current Prompt Latency: 1.9092659996822476
-Current Generated Tokens: 31
-Current Tokens / sec: 17.169835147427957
-
-
-Current Prompt: what is the host country of World Cup 2026?
-Current Response: The host country of the 2026 FIFA World Cup is yet to be determined, as the bidding process for the tournament has not yet begun. Thenext edition of the World Cup will be held in Qatar in 2022.
-Current Prompt Latency: 3.2275107000023127
-Current Generated Tokens: 53
-Current Tokens / sec: 16.98124693616653
-
-
-Min Latentcy for Model: 0.2947811000049114
-Max Latentcy for Model: 3.2275107000023127
-Avg Latentcy for Model: 1.8105192665631573
-
-
-Benchmarking for current Model: llama3.1:8b-instruct-q4_K_M
-
-Current Prompt: Say HELLO in reply. No other words/format.
-Current Response: HELLO
-Current Prompt Latency: 0.3634097003377974
-Current Generated Tokens: 3
-Current Tokens / sec: 23.275300251373242
-
-
-Current Prompt: Where is the capital of Singapore?
-Current Response: The capital of Singapore is Singapore! Yes, you read that right - Singapore is a small island city-state and its entire territory serves as the country's administrative, commercial, and cultural center. There isn't a separate city or town that functions as the capital. The government buildings, institutions, and iconic landmarks like the Marina Bay Sands and Gardens by the Bay are all located within the urban area of Singapore.
-Current Prompt Latency: 5.467150800395757
-Current Generated Tokens: 82
-Current Tokens / sec: 15.698647236080852
-
-
-Current Prompt: what is the host country of World Cup 2026?
-Current Response: The host countries for the FIFA World Cup 2026 are:
-
-* United States
-* Canada
-* Mexico
-
-These three countries have been officially announced as co-hosts of the tournament by FIFA. This will be the first time that multiple countries will share hosting duties for a single FIFA World Cup event.
-
-So, to answer your question, there isn't just one host country, but rather three countries: USA, Canada, and Mexico!
-Current Prompt Latency: 5.934560500085354
-Current Generated Tokens: 89
-Current Tokens / sec: 15.641407550933431
-
-
-Min Latentcy for Model: 0.3634097003377974
-Max Latentcy for Model: 5.934560500085354
-Avg Latentcy for Model: 3.9217070002729693
-
-
-Benchmarking for current Model: gemma4:e4b
-
-Current Prompt: Say HELLO in reply. No other words/format.
-Current Response: HELLO
-Current Prompt Latency: 23.543951000086963
-Current Generated Tokens: 2
-Current Tokens / sec: 43.81832920710733
-
-
-Current Prompt: Where is the capital of Singapore?
-Current Response: The capital city of Singapore **is** in Singapore.
-
-(Singapore is a small island country, and its entire main population center and governmental hub are concentrated within the geographical area that constitutes the nation.)
-Current Prompt Latency: 2.229766699951142
-Current Generated Tokens: 41
-Current Tokens / sec: 22.489684914029066
-
-
-Current Prompt: what is the host country of World Cup 2026?
-Current Response: The host countries for the FIFA World Cup 2026 will be **Canada**, the **United States**, and **Mexico**.
-Current Prompt Latency: 9.681494299788028
-Current Generated Tokens: 204
-Current Tokens / sec: 22.004727780483424
-
-
-Min Latentcy for Model: 2.229766699951142
-Max Latentcy for Model: 23.543951000086963
-Avg Latentcy for Model: 11.818403999942044
+Recommendation
+- Default model recommendation: qwen2.5:7b-instruct-q4_K_M
+- Reason: best overall tradeoff between latency, correctness, structured-output reliability, and practical use on CPU-only hardware
+- Fast alternative: mistral:7b-instruct-q4_K_M
