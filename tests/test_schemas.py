@@ -7,8 +7,6 @@ def test_llmrequest_valid():
     request = LLMRequest(prompt="What is the capital of Singapore?")
     assert request.prompt == "What is the capital of Singapore?"
     assert request.model == "qwen2.5:7b-instruct-q4_K_M"
-    assert request.temperature == 0.1
-    assert request.max_tokens == 1000
 
 @pytest.mark.parametrize("empty_prompt", ["", "   ", "\t", "\n"])
 def test_llmrequest_empty_prompt(empty_prompt):

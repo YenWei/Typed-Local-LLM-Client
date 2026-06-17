@@ -96,20 +96,21 @@ The benchmark focused on:
 
 The benchmark exists to help pick a practical default model for the client. It is supporting evidence, not the core abstraction of the package.
 
-## Current benchmark takeaway
+## Benchmark summary
 
-The best practical default for this setup was:
+Candidate local models were benchmarked on the target CPU-only setup for:
+
+- instruction following
+- factual recall
+- structured-output format compliance
+- latency
+- output length
+
+The current recommended default model is:
 
 - `qwen2.5:7b-instruct-q4_K_M`
 
-It offered the strongest balance of:
-
-- correctness
-- structured-output compliance
-- acceptable latency
-- reasonable output length
-
-A faster alternative existed, but with weaker answer reliability on some prompts.
+For the full evaluation and per-model metrics, see [benchmark-summary.md](benchmark-summary.md).
 
 ## What this demonstrates
 
@@ -159,6 +160,5 @@ Implemented:
 
 Planned future improvements:
 - stronger showcase schemas than the current example schema
-- cleaner benchmark reporting
 - tighter packaging and usage examples
 - integration into a larger embedded RAG workflow

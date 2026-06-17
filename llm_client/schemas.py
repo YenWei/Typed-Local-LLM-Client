@@ -5,8 +5,6 @@ from typing import Literal
 class LLMRequest(BaseModel):
     model: str = "qwen2.5:7b-instruct-q4_K_M"
     prompt: str
-    temperature: float = 0.1
-    max_tokens: int = 1000
 
     @field_validator('prompt')
     @classmethod
