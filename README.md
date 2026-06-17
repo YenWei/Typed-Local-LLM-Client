@@ -111,7 +111,7 @@ It offered the strongest balance of:
 
 A faster alternative existed, but with weaker answer reliability on some prompts.
 
-## Why this is portfolio-worthy
+## What this demonstrates
 
 This project is small on purpose.
 
